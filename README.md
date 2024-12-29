@@ -1,4 +1,4 @@
-# Projet Logement Éco-responsable - Weather4U
+# Projet Logement Éco-responsable - Weather4U BOU ALI Aymen
 
 ## Présentation du Projet
 Weather4U combine plusieurs outils comme une API météo, une base de données, et des graphiques interactifs pour fournir une interface intuitive permettant de surveiller la météo, gérer la consommation énergétique, et suivre les capteurs présents dans le logement.
