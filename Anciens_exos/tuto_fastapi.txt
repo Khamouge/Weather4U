@@ -1,0 +1,38 @@
+# Tutoriel pour lancer fastapi rapidement
+
+# Créer l'env
+python -m venv .venv
+
+# Lancer l'env
+source .venv/bin/activate
+
+# Amélioration de pip
+python -m pip install --upgrade pip
+
+# Installation de fastapi
+pip install "fastapi[standard]"
+
+# Lancer une fonction avec fastapi
+fastapi dev main.py
+
+# Se connecter à la page
+http://127.0.0.1:8000/docs
+
+
+
+
+
+
+Pour exo3
+<h3>Données Météo</h3>
+        <table border="1">
+          <tr><th>Date</th><th>Température Max (°C)</th><th>Température Min (°C)</th><th>Précipitations (mm)</th><th>Humidité Max (%)</th><th>Humidité Min (%)</th></tr>
+          {''.join(f'<tr><td>{row}</td><td>{temp_max}</td><td>{temp_min}</td><td>{precip}</td><td>{humidity_max}</td><td>{humidity_min}</td></tr>' for row, temp_max, temp_min, precip, humidity_max, humidity_min in zip(
+            daily_dataframe['date'].dt.strftime('%Y-%m-%d'), 
+            daily_dataframe['temperature_max'], 
+            daily_dataframe['temperature_min'], 
+            daily_dataframe['precipitation'],
+            daily_dataframe['humidity_max'],
+            daily_dataframe['humidity_min']
+          ))}
+        </table>

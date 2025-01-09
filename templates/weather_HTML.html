@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../static/weather.css">
+    <script type="text/javascript" src="/static/bouton_meteo/boutons.js"></script>
+    <title>Prévisions Météo</title>
+</head>
+<body>
+  <div>
+    <nav class="nav">
+      <div class="logo">
+          <a href="#"><span>W</span>eather<span>4</span>u</a>
+      </div>
+      <div class="nav-links" id="nav-links">
+          <ul>
+              <li><a href="/accueil/">Accueil</a></li>                
+              <li class="active"><a href="#" class="current-page">Météo</a></li>
+              <li><a href="/factures/piechart">Consommation</a></li>
+              <li><a href="/capteurs/">Capteurs</a></li>
+          </ul>
+      </div>
+      <img class="bouton_menu" src="../static/barre_menu.jpg" alt="Menu" onclick="toggleMenu()" />
+    </nav>
+    </div>
+    <div class="titre">
+      <h1>Weather4u</h1>
+    </div>
+    <div class="titre_b">
+      <h1>Weather4u</h1>
+    </div>
+    <div id="carre">
+    <h2>Prévisions Météo</h2>
+    <h3>Graphiques Météo</h3>
+
+    <!-- Conteneur des boutons -->
+    <div id="boutons">
+        <input class="Température" type="button" value="Température" style="background-color: red;" onclick="showGraph('temp');" />
+        <input class="Humidité" type="button" value="Humidité" style="background-color: red;" onclick="showGraph('humidity');" />
+        <input class="Précipitation" type="button" value="Précipitation" style="background-color: red;" onclick="showGraph('precipitation');" />
+    </div>
+
+    <!-- Conteneur des graphiques -->
+    <div id="graphiques">
+        <img id="temp" src="data:image/png;base64,{{ temp_img }}" alt="Graphique Température" class="graphique" />
+        <img id="humidity" src="data:image/png;base64,{{ humidity_img }}" alt="Graphique Humidité" class="graphique" style="display: none;" />
+        <img id="precipitation" src="data:image/png;base64,{{ precipitation_img }}" alt="Graphique Précipitations" class="graphique" style="display: none;" />
+    </div>
+</div>
+
+  </div>
+</body>
+</html>

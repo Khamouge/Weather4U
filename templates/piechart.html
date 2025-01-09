@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../static/piechart.css">
+</head>
+<body>
+<header>
+<div>
+    <nav class="nav">
+        <div class="logo">
+            <a href="#"><span>W</span>eather<span>4</span>u</a>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <ul>
+                <li><a href="/accueil/">Accueil</a></li>                
+                <li><a href="/weather/">Météo</a></li>
+                <li class="active"><a href="#" class="current-page">Consommation</a></li>
+                <li><a href="/capteurs/">Capteurs</a></li>
+            </ul>
+        </div>
+        <img class="bouton_menu" src="../static/barre_menu.jpg" alt="">
+    </nav>
+  </div>
+  <div class="titre">
+    <h1>Weather4u</h1>
+  </div>
+  <div class="titre_b">
+    <h1>Weather4u</h1>
+  </div>
+</header>
+  <div id="carre">
+    <h2>Camembert des factures</h2>
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Type de Facture', 'Montant'],
+          {% for row in data_rows %}
+          ['{{ row.type_facture }}', {{ row.total }}],
+          {% endfor %}
+        ]);
+
+        var options = {
+          title: 'Répartition des factures par type',
+          is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+      }
+    </script>
+    </div>
+</body>
+</html>
