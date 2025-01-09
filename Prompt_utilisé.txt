@@ -1,0 +1,199 @@
+Je souhaite faire apparaître des graphiques en fonction de si un bouton est activé. Si un bouton est activé alors tous les autres seront à l'état off. Un seul bouton ne doit être à l'état on et donc un seul graphique par bouton ne doit être présent. Voici le code du fichier .js que j'utilise pour cela, il contient des erreurs et je souhaiterai que tu résolves celles-ci en fonction du fichier html que je te donne :
+
+document.addEventListener("DOMContentLoaded", function() { 
+    // this function runs when the DOM is ready, i.e. when the document has been parsed
+      var portion_temp = document.querySelector(".portion_temp");
+      var portion_humi = document.querySelector(".portion_humi");
+      var portion_préci = document.querySelector(".portion_préci");
+
+      var btn = document.querySelector(".Température");
+      var btn2 = document.querySelector(".Humidité");
+      var btn3 = document.querySelector(".Précipitation");
+      //var txt = document.querySelector("p");
+      
+      btn.addEventListener("click", updateBtn);
+      
+      function updateBtn() {
+        if (btn.value === "< Température >") {
+          btn.value = "> Température <";
+          btn2.value = "< Humidité >";
+          btn3.value = "< Précipitation >";
+          btn.style = "background-color: green;"
+          portion_temp.img.display = none;
+          //txt.textContent = "On";
+        } else {
+          btn.value = "< Température >";
+          btn.style = "background-color: red;"
+          //txt.textContent = "off";
+        }
+      }
+  });
+
+
+
+Et voici le code HTML que le fichier bouton_meteo/bouton_temperature.js doit suivre :
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../static/weather.css">
+    <script type="text/javascript" src="/static/bouton_meteo/bouton_temperature.js"></script>
+    <script type="text/javascript" src="/static/"></script>
+    <script type="text/javascript" src="/static/"></script>
+    <title>Prévisions Météo</title>
+</head>
+<body>
+  <div>
+      <nav class="nav">
+        <div class="logo">
+          <a href="#"><span>W</span>eather<span>4</span>u</a>
+        </div>
+          <div class="nav-links">
+              <ul>
+                  <li><a href="/accueil/">Accueil</a></li>                
+                  <li class="active"><a href="#">Météo</a></li>
+                  <li><a href="/factures/piechart">Consommation</a></li>
+                  <li><a href="/capteurs/">Capteurs</a></li>
+                  <li><a href="/factures">Comparatif</a></li>
+                  <li><a href="#">Configuration</a></li>
+              </ul>
+          </div>
+          <img class="bouton_menu" src="../static/barre_menu.jpg" alt="">
+      </nav>
+    </div>
+    <div class="titre">
+      <h1>Weather4u</h1>
+    </div>
+    <div class="titre_b">
+      <h1>Weather4u</h1>
+    </div>
+    <div id="carre">
+      <h2>Prévisions Météo</h2>
+      <h3>Graphiques Météo</h3>
+      <div id="portion_temp">
+      <form>
+        <input class="Température" type="button" value="< Température >" style="background-color: red;"/>
+      </form>
+      <h4>Température Maximale et Minimale</h4>
+      <img src="data:image/png;base64,{{ temp_img }}" alt="Graphique Température" style="width: 900px; height: 500px;">
+      </div>
+
+      <div id="portion_humi">
+        <form>
+          <input class="Humidité" type="button" value="Off" style="background-color: red;"/>
+        </form>
+      <h4>Humidité Maximale et Minimale</h4>
+      <img src="data:image/png;base64,{{ humidity_img }}" alt="Graphique Humidité" style="width: 900px; height: 500px;">
+      </div>
+
+      <div id="portion_préci">
+        <form>
+          <input class="Précipitation" type="button" value="Off" style="background-color: red;"/>
+        </form>
+      <h4>Précipitations</h4>
+      <img src="data:image/png;base64,{{ precipitation_img }}" alt="Graphique Précipitations" style="width: 900px; height: 500px;">
+      </div>
+    </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
+------------------------------------------- Réponse -------------------------------------------
+
+Voici une version corrigée et améliorée du fichier JavaScript en fonction de votre code HTML. Les erreurs d'origine sont corrigées, et le comportement attendu (un seul bouton activé à la fois avec l'affichage d'un seul graphique) est implémenté.
+
+### Code corrigé et amélioré pour `bouton_temperature.js` :
+
+```javascript
+document.addEventListener("DOMContentLoaded", function () {
+    // Sélection des sections des graphiques et des boutons
+    const portionTemp = document.querySelector("#portion_temp");
+    const portionHumi = document.querySelector("#portion_humi");
+    const portionPreci = document.querySelector("#portion_préci");
+
+    const btnTemp = document.querySelector(".Température");
+    const btnHumi = document.querySelector(".Humidité");
+    const btnPreci = document.querySelector(".Précipitation");
+
+    // Ajout des gestionnaires d'événements pour chaque bouton
+    btnTemp.addEventListener("click", function () {
+        activateSection(btnTemp, portionTemp, [btnHumi, btnPreci], [portionHumi, portionPreci]);
+    });
+
+    btnHumi.addEventListener("click", function () {
+        activateSection(btnHumi, portionHumi, [btnTemp, btnPreci], [portionTemp, portionPreci]);
+    });
+
+    btnPreci.addEventListener("click", function () {
+        activateSection(btnPreci, portionPreci, [btnTemp, btnHumi], [portionTemp, portionHumi]);
+    });
+
+    /**
+     * Active une section et désactive toutes les autres.
+     * @param {HTMLElement} activeButton - Le bouton activé.
+     * @param {HTMLElement} activeSection - La section activée.
+     * @param {HTMLElement[]} otherButtons - Les autres boutons à désactiver.
+     * @param {HTMLElement[]} otherSections - Les autres sections à masquer.
+     */
+    function activateSection(activeButton, activeSection, otherButtons, otherSections) {
+        // Activer le bouton et la section correspondants
+        activeButton.value = "> " + activeButton.className + " <";
+        activeButton.style.backgroundColor = "green";
+        activeSection.style.display = "block";
+
+        // Désactiver les autres boutons et masquer les autres sections
+        otherButtons.forEach((button) => {
+            button.value = "< " + button.className + " >";
+            button.style.backgroundColor = "red";
+        });
+
+        otherSections.forEach((section) => {
+            section.style.display = "none";
+        });
+    }
+});
+```
+
+---
+
+### Ce que le script fait :
+1. **Initialisation des éléments DOM** :
+   - Chaque bouton (`Température`, `Humidité`, `Précipitation`) et section graphique correspondante est sélectionné avec `querySelector`.
+
+2. **Ajout des gestionnaires d'événements** :
+   - Chaque bouton a un événement `click` qui appelle la fonction `activateSection`.
+
+3. **Fonction `activateSection`** :
+   - Active le bouton et la section associés :
+     - Met à jour la valeur du bouton pour indiquer qu'il est actif.
+     - Change la couleur de fond du bouton en vert.
+     - Affiche la section correspondante.
+   - Désactive les autres boutons et masque les autres sections :
+     - Met à jour les valeurs des autres boutons pour indiquer qu'ils sont inactifs.
+     - Change leur couleur de fond en rouge.
+     - Cache les sections correspondantes.
+
+---
+
+### Changements clés apportés :
+1. **Correction de la propriété `style`** :
+   - Vous avez écrit `portion_temp.img.display = none;`. Cela est incorrect car `display` est une propriété CSS et doit être appliquée via `style.display = "none";`.
+
+2. **Gestion des états des boutons** :
+   - Le script assure que lorsqu'un bouton est activé, tous les autres passent à l'état "Off".
+
+3. **Visibilité des graphiques** :
+   - Les sections des graphiques sont cachées ou affichées en fonction du bouton activé en utilisant `style.display`.
+
+---
+
+### Intégration dans le HTML :
+Assurez-vous que le fichier `bouton_temperature.js` est bien lié dans votre HTML :
+```html
+<script type="text/javascript" src="/static/bouton_meteo/bouton_temperature.js"></script>
+```
+
+Avec ces corrections, le comportement devrait être conforme à vos attentes : un seul graphique visible à la fois et un seul bouton actif.
