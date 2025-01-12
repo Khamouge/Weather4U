@@ -1,7 +1,0 @@
-Voici les sources que j'ai pu utiliser pour mon projet :
-
-Tutoriel pour créer un site HTML avec CSS :
-https://youtu.be/v1Pv-M6zf4c?si=4LoPuVzzd9qYbkla
-
-Tutoriel pour le menu déroulant :
-https://youtu.be/HQopEEurQYE?si=RFDx87voA_0O2wtx
